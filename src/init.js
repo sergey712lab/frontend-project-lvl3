@@ -1,9 +1,6 @@
-// @ts-check
-
-import Example from './Example.js';
+import handler from './handler';
 
 export default () => {
-  const element = document.getElementById('point');
-  const obj = new Example(element);
-  obj.init();
+  const form = document.querySelector('form');
+  form.addEventListener('submit', handler);
 };
