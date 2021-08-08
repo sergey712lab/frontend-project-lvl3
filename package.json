@@ -1,61 +1,49 @@
 {
   "name": "@hexlet/code",
-  "version": "0.1.0",
-  "description": "",
+  "version": "1.0.0",
+  "description": "RSS aggregator",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hexlet-boilerplates/webpack-package.git"
-  },
-  "author": "Sergey",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/hexlet-boilerplates/webpack-package/issues"
-  },
-  "homepage": "https://github.com/hexlet-boilerplates/webpack-package#readme",
-  "jest": {
-    "verbose": true,
-    "testURL": "http://localhost/",
-    "testEnvironment": "jsdom"
+    "test": "npx jest"
   },
   "main": "src/init.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Guryanov-Maksim/frontend-project-lvl3.git"
+  },
+  "author": "sergey712lab",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sergey712lab/frontend-project-lvl3/issues"
+  },
+  "homepage": "https://github.com/sergey712lab/frontend-project-lvl3#readme",
   "devDependencies": {
-    "@babel/core": "^7.14.8",
-    "@babel/eslint-parser": "^7.14.7",
-    "@babel/preset-env": "^7.14.8",
-    "babel-jest": "^27.0.6",
-    "babel-loader": "^8.2.2",
-    "css-loader": "^6.2.0",
-    "debug": "^4.3.2",
-    "eslint": "^7.32.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-plugin-babel": "^5.3.1",
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@testing-library/dom": "^7.31.2",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/user-event": "^13.1.9",
+    "babel-jest": "^26.6.3",
+    "css-loader": "^5.2.6",
+    "eslint": "^7.30.0",
+    "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jest": "^24.4.0",
-    "file-loader": "^6.2.0",
+    "eslint-plugin-jest": "^24.3.6",
     "html-webpack-plugin": "^5.3.2",
-    "jest": "^27.0.6",
-    "jest-cli": "^27.0.6",
-    "postcss-loader": "^6.1.1",
-    "postcss-preset-env": "^6.7.0",
-    "sass": "^1.37.5",
-    "sass-loader": "^12.1.0",
-    "style-loader": "^3.2.1",
-    "url-loader": "^4.1.1",
-    "webpack": "^5.48.0",
+    "jest": "^26.6.3",
+    "nock": "^13.1.1",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.44.0",
     "webpack-cli": "^4.7.2",
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
+    "@popperjs/core": "^2.9.2",
     "axios": "^0.21.1",
     "bootstrap": "^5.0.2",
-    "i18next": "^20.3.5",
+    "i18next": "^20.3.2",
     "lodash": "^4.17.21",
     "on-change": "^3.0.2",
-    "uuid": "^3.4.0",
     "yup": "^0.32.9"
   }
 }

@@ -1,63 +1,34 @@
-import 'bootstrap';
-import './style.scss';
+import i18next from 'i18next';
 import * as yup from 'yup';
-import i18n from 'i18next';
-import view from './view.js';
-import ru from './locales/ru.js';
-import renderForm from './renderForm.js';
-import addNewRssPosts from './updatePosts.js';
-import renderPosts from './renderPosts.js';
+import { ru, errors } from './locales';
+import addAndWatchFeeds from './application.js';
+import 'bootstrap/js/dist/modal.js';
 
 export default () => {
-  const state = {
-    form: {
-      error: null,
-      status: 'neutral',
-    },
-    loadingProcess: {
-      status: 'inactive',
-    },
-    posts: [],
-    feeds: [],
-    updatedPosts: [],
-    viewedPostsIds: [],
-    modalPostId: null,
-  };
+  yup.setLocale(errors);
 
-  yup.setLocale({
-    string: {
-      url: () => ('form.errors.invalidURL'),
-    },
-  });
-
-  const schema = yup.object().shape({
-    url: yup.string().url(),
-  });
-
-  const form = document.querySelector('.rss-form');
-  const inputURL = document.querySelector('input[aria-label="url"]');
-  const posts = document.querySelector('.posts');
-
-  const i18nInstance = i18n.createInstance();
+  const defaultLanguage = 'ru';
+  const i18nInstance = i18next.createInstance();
   return i18nInstance.init({
-    lng: 'ru',
+    lng: defaultLanguage,
     debug: false,
     resources: {
       ru,
     },
-  })
-    .then(() => {
-      const watchedState = view(state, i18nInstance, form, inputURL);
-
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        renderForm(watchedState, inputURL, schema, i18nInstance);
-      });
-
-      posts.addEventListener('click', (event) => {
-        renderPosts(event.target, watchedState);
-      });
-
-      setTimeout(() => addNewRssPosts(watchedState), 5000);
-    });
+  }).then(() => {
+    const state = {
+      feeds: [],
+      posts: [],
+      feedAddingProcess: {
+        error: null,
+        state: 'filling',
+        validationState: 'valid',
+      },
+      uiState: {
+        visitedPostIds: new Set(),
+        activePostId: null,
+      },
+    };
+    addAndWatchFeeds(state, i18nInstance);
+  });
 };
