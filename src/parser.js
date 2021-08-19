@@ -15,7 +15,8 @@ export default (content) => {
   const dom = domparser.parseFromString(content, 'application/xml');
   const error = dom.querySelector('parsererror');
   if (error) {
-    throw new Error('withoutRss');
+    err.isMyError = true;
+    throw error;
   }
   const itemElements = dom.querySelectorAll('item');
 

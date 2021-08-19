@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import axios from 'axios';
+import i18next from 'i18next';
 import * as yup from 'yup';
 import initView from './view.js';
 import parse from './parser.js';
@@ -27,9 +28,9 @@ const getFeedAndPosts = (rssLink, state) => {
 const watchRssFeed = (state) => {
   const { feeds } = state;
   const links = feeds.map((feed) => feed.rssLink);
-  const timeout = 5000;
   setTimeout(() => {
-    const promises = links.map((link) => getFeedAndPosts(link, state));
+    const promises = links.map((link) => getFeedAndPosts(link, state)
+      .catch(e => console.error(e)));
     Promise.all(promises)
       .then((feedsWithPosts) => {
         feedsWithPosts.forEach(({ posts }) => {
@@ -45,7 +46,7 @@ const watchRssFeed = (state) => {
         console.error(error);
       })
       .finally(() => watchRssFeed(state));
-  }, timeout);
+  }, 5000);
 };
 
 const addFeed = (state, rssLink) => {
@@ -59,8 +60,9 @@ const addFeed = (state, rssLink) => {
       state.posts = [...posts, ...state.posts];
       state.feedAddingProcess.state = 'filling';
     })
-    .catch((error) => {
-      state.feedAddingProcess.error = error.message;
+    .catch((err) => {
+      err.isMyError = true;
+      state.error = err;
       state.feedAddingProcess.state = 'failed';
     });
 };
@@ -96,8 +98,9 @@ export default (state, i18nInstance) => {
         watchedState.feedAddingProcess.validationState = 'valid';
         addFeed(watchedState, validUrl);
       })
-      .catch((error) => {
-        watchedState.feedAddingProcess.error = error.message;
+      .catch((err) => {
+	err.isMyError = true;
+        watchedState.error = err;
         watchedState.feedAddingProcess.validationState = 'invalid';
       });
   });

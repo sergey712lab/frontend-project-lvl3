@@ -92,15 +92,15 @@ const renderModal = (state, elements) => {
   elements.modalDetails.setAttribute('href', link);
 };
 
-const renderPostLink = (activePostId, elements) => {
+const updatePostLinkStyle = (activePostId, elements) => {
   const link = elements.postsContainer.querySelector(`[data-id="${activePostId}"]`);
   link.classList.remove('fw-bold');
   link.classList.add('fw-normal');
 };
 
-const handlePostWatch = (uiState, post) => {
-  uiState.activePostId = post.id;
-  uiState.visitedPostIds.add(post.id);
+const handlePostWatch = (uiState, post_id) => {
+  uiState.activePostId = post_id;
+  uiState.visitedPostIds.add(post_id);
 };
 
 const renderPosts = (state, elements, i18nInstance) => {
@@ -108,6 +108,12 @@ const renderPosts = (state, elements, i18nInstance) => {
   elements.postsContainer.innerHTML = `<h2>${header}</h2>`;
   const ul = document.createElement('ul');
   ul.classList.add('list-group', 'border-0', 'rounded-0');
+  ul.addEventListener('click', (event) => {
+    if (event.target.hasAttribute ('data-id')) {
+       handlePostWatch(state.uiState, event.target.getAttribute('data-id'));
+    }
+  });
+      
   state.posts.forEach((post) => {
     const link = document.createElement('a');
     const linkAttributes = [
@@ -130,22 +136,13 @@ const renderPosts = (state, elements, i18nInstance) => {
     button.classList.add('btn', 'btn-outline-primary', 'btn-sm');
     button.setAttribute('data-bs-toggle', 'modal');
     button.setAttribute('data-bs-target', '#exampleModal');
+    button.setAttribute('data-id', post.id);
     button.textContent = i18nInstance.t('posts.seeButton');
 
     const li = document.createElement('li');
     li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-start', 'border-0', 'border-end-0');
     li.append(link);
     li.append(button);
-    li.addEventListener('click', (event) => {
-      switch (event.target) {
-        case button:
-        case link:
-          handlePostWatch(state.uiState, post);
-          break;
-        default:
-          break;
-      }
-    });
 
     ul.append(li);
   });
@@ -160,7 +157,7 @@ const initView = (state, elements, i18nInstance) => {
     'feedAddingProcess.validationState': () => renderValidationResult(state.feedAddingProcess, elements, i18nInstance),
     'uiState.activePostId': (watchedState) => {
       renderModal(watchedState, elements);
-      renderPostLink(watchedState.uiState.activePostId, elements);
+      updatePostLinkStyle(watchedState.uiState.activePostId, elements);
     },
   };
 

@@ -9,6 +9,20 @@ export default () => {
 
   const defaultLanguage = 'ru';
   const i18nInstance = i18next.createInstance();
+  const state = {
+    feeds: [],
+    posts: [],
+    feedAddingProcess: {
+      error: null,
+      state: 'filling',
+      validationState: 'valid',
+    },
+    uiState: {
+      visitedPostIds: new Set(),
+      activePostId: null,
+    },
+  };
+
   return i18nInstance.init({
     lng: defaultLanguage,
     debug: false,
@@ -16,19 +30,6 @@ export default () => {
       ru,
     },
   }).then(() => {
-    const state = {
-      feeds: [],
-      posts: [],
-      feedAddingProcess: {
-        error: null,
-        state: 'filling',
-        validationState: 'valid',
-      },
-      uiState: {
-        visitedPostIds: new Set(),
-        activePostId: null,
-      },
-    };
     addAndWatchFeeds(state, i18nInstance);
   });
 };
