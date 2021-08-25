@@ -1,6 +1,5 @@
 import _ from 'lodash';
 import axios from 'axios';
-import i18next from 'i18next';
 import * as yup from 'yup';
 import initView from './view.js';
 import parse from './parser.js';
@@ -30,7 +29,7 @@ const watchRssFeed = (state) => {
   const links = feeds.map((feed) => feed.rssLink);
   setTimeout(() => {
     const promises = links.map((link) => getFeedAndPosts(link, state)
-      .catch(e => console.error(e)));
+      .catch((e) => console.error(e)));
     Promise.all(promises)
       .then((feedsWithPosts) => {
         feedsWithPosts.forEach(({ posts }) => {
@@ -100,7 +99,7 @@ export default (state, i18nInstance) => {
         addFeed(watchedState, validUrl);
       })
       .catch((err) => {
-	err.isMyError = true;
+        err.isMyError = true;
         watchedState.error = err;
         watchedState.feedAddingProcess.validationState = 'invalid';
       });

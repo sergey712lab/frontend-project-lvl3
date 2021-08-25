@@ -98,9 +98,9 @@ const updatePostLinkStyle = (activePostId, elements) => {
   link.classList.add('fw-normal');
 };
 
-const handlePostWatch = (uiState, post_id) => {
-  uiState.activePostId = post_id;
-  uiState.visitedPostIds.add(post_id);
+const handlePostWatch = (uiState, postId) => {
+  uiState.activePostId = postId;
+  uiState.visitedPostIds.add(postId);
 };
 
 const renderPosts = (state, elements, i18nInstance) => {
@@ -109,11 +109,10 @@ const renderPosts = (state, elements, i18nInstance) => {
   const ul = document.createElement('ul');
   ul.classList.add('list-group', 'border-0', 'rounded-0');
   ul.addEventListener('click', (event) => {
-    if (event.target.hasAttribute ('data-id')) {
-       handlePostWatch(state.uiState, event.target.getAttribute('data-id'));
+    if (event.target.hasAttribute('data-id')) {
+      handlePostWatch(state.uiState, event.target.getAttribute('data-id'));
     }
-  });
-      
+  });    
   state.posts.forEach((post) => {
     const link = document.createElement('a');
     const linkAttributes = [
