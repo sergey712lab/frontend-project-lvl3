@@ -112,7 +112,7 @@ const renderPosts = (state, elements, i18nInstance) => {
     if (event.target.hasAttribute('data-id')) {
       handlePostWatch(state.uiState, event.target.getAttribute('data-id'));
     }
-});    
+  });
   state.posts.forEach((post) => {
     const link = document.createElement('a');
     const linkAttributes = [
