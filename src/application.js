@@ -60,9 +60,12 @@ const addFeed = (state, rssLink) => {
       state.feedAddingProcess.state = 'filling';
     })
     .catch((err) => {
-      err.isMyError = true;
+      if (err.isMyError === true) {
+          state.feedAddingProcess.error = err.myMessage;
+      } else {
+          state.feedAddingProcess.error = 'Network Error';
+      }
       state.error = err;
-      state.feedAddingProcess.error = 'withoutRss';
       state.feedAddingProcess.state = 'failed';
     });
 };

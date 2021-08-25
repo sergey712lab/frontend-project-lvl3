@@ -16,6 +16,7 @@ export default (content) => {
   const error = dom.querySelector('parsererror');
   if (error) {
     error.isMyError = true;
+    error.myMessage = 'withoutRss'; 
     throw error;
   }
   const itemElements = dom.querySelectorAll('item');
