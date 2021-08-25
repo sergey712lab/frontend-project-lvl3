@@ -61,9 +61,9 @@ const addFeed = (state, rssLink) => {
     })
     .catch((err) => {
       if (err.isMyError === true) {
-          state.feedAddingProcess.error = err.myMessage;
+        state.feedAddingProcess.error = err.myMessage;
       } else {
-          state.feedAddingProcess.error = 'Network Error';
+        state.feedAddingProcess.error = 'Network Error';
       }
       state.error = err;
       state.feedAddingProcess.state = 'failed';
