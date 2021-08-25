@@ -63,6 +63,7 @@ const addFeed = (state, rssLink) => {
     .catch((err) => {
       err.isMyError = true;
       state.error = err;
+      state.feedAddingProcess.error = 'withoutRss';
       state.feedAddingProcess.state = 'failed';
     });
 };

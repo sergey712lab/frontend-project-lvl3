@@ -12,8 +12,8 @@ const renderFeedback = (error, container, i18nInstance) => {
   container.classList.add('text-success');
 };
 
-const renderValidationResult = (formState, elements, i18nInstance) => {
-  const { error, validationState } = formState;
+const renderValidationResult = (formState, elements, i18nInstance, error) => {
+  const { validationState } = formState;
   const { feedback, input } = elements;
   switch (validationState) {
     case 'valid': {
@@ -154,7 +154,7 @@ const initView = (state, elements, i18nInstance) => {
     feeds: () => renderFeeds(state.feeds, elements.feedContainer, i18nInstance),
     posts: (watchedState) => renderPosts(watchedState, elements, i18nInstance),
     'feedAddingProcess.state': () => renderForm(state.feedAddingProcess, elements, i18nInstance),
-    'feedAddingProcess.validationState': () => renderValidationResult(state.feedAddingProcess, elements, i18nInstance),
+    'feedAddingProcess.validationState': () => renderValidationResult(state.feedAddingProcess, elements, i18nInstance, state.error.message),
     'uiState.activePostId': (watchedState) => {
       renderModal(watchedState, elements);
       updatePostLinkStyle(watchedState.uiState.activePostId, elements);
@@ -163,7 +163,7 @@ const initView = (state, elements, i18nInstance) => {
 
   const watchedState = onChange(state, (path) => {
     if (mapping[path]) {
-      mapping[path](watchedState);
+      mapping[path]?.(watchedState);
     }
   });
 
